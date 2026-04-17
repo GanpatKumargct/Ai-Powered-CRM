@@ -63,3 +63,23 @@ npm install
 npm run dev
 ```
 *(The frontend React app will be accessible via your localhost address shown in the terminal)*
+
+## Visual Working Flow
+
+```mermaid
+graph TD
+    User([User]) -->|Speaks / Types| UI[React Frontend]
+    UI -->|Sends Message| API[FastAPI Backend]
+    
+    subgraph AI Processing
+        API -->|Prompts| Brain{LangGraph AI Agent}
+        Brain -->|Llama-3.3-70B| Groq[Groq API]
+        Groq -->|Extracts Entities| Brain
+        Brain -->|Returns JSON| API
+    end
+    
+    API -->|Streams Data| UI
+    UI -->|Auto-populates Form| User
+    User -->|Reviews & Saves| API
+    API -->|Saves Record| DB[(PostgreSQL Database)]
+```
